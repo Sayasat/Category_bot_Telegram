@@ -13,7 +13,7 @@ public class ViewTreeCommand implements Command {
 
     /**
      * Метод для обработки команды /viewTree, который отображает дерево категорий.
-     * При необходимости может отображать подкатегории, если указано имя категории.
+     * При необходимости может отображать подкатегории, если указано имя категории
      */
     @Override
     public String execute(String text, Long chatId) {

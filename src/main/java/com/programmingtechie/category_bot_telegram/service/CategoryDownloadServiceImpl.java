@@ -73,7 +73,7 @@ public class CategoryDownloadServiceImpl implements CategoryDownloadService {
      * Заполняет таблицу данными о категориях.
      *
      * @param sheet лист Excel для данных.
-     * @param categories список категорий.
+     * @param categories список категорий
      */
     private void fillData(Sheet sheet, List<Category> categories) {
         int rowIndex = 1;

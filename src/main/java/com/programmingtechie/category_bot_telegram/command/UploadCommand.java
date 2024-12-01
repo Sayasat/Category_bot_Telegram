@@ -16,7 +16,7 @@ public class UploadCommand {
     private final CategoryService categoryService;
 
     /**
-     * Обрабатывает загрузку файла с категориями и сохраняет данные в базу данных.
+     * Обрабатывает загрузку файла с категориями и сохраняет данные в базу данных
      */
     public String handleFileUpload(InputStream inputStream, Long chatId) {
         try {

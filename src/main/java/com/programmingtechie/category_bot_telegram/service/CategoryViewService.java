@@ -36,7 +36,7 @@ public class CategoryViewService {
 
     /**
      * Отображение дерева с указанной категории.
-     * Паттерн: Iterator - последовательно обходить элементы составных обьектов.
+     * Паттерн: Iterator - последовательно обходить элементы составных обьектов
      */
     private String viewFromCategoryName(String categoryName, StringBuilder response, Long chatId) {
         Optional<Category> categoryOpt = categoryRepository.findByNameAndChatId(categoryName, chatId);

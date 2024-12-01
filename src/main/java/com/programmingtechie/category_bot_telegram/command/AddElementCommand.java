@@ -13,7 +13,7 @@ public class AddElementCommand implements Command {
 
     /**
      * Выполнение команды /addElement.
-     * Разделяет команду и вызывает метод сервиса для добавления элемента.
+     * Разделяет команду и вызывает метод сервиса для добавления элемента
      */
     @Override
     public String execute(String text, Long chatId) {

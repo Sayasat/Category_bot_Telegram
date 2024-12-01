@@ -41,7 +41,7 @@ public class TelegramConfig {
             log.error("Ошибка регистрации бота: {}", e.getMessage());
         }
 
-        // Возвращаем экземпляр CategoryBot, который зарегистрирован в Telegram API
+        // Возвращаем экземпляр CategoryBot, который зарегистрирован в Telegram API.
         return categoryBot;
     }
 }

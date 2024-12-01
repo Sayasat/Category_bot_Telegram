@@ -25,7 +25,7 @@ public class DownloadCommand {
      * Обрабатывает команду скачивания дерева категорий и отправляет файл.
      *
      * В этом методе используется паттерн Command для обработки команды
-     * и паттерн Factory для создания экземпляра InputFile с данными.
+     * и паттерн Factory для создания экземпляра InputFile с данными
      */
     public void execute(AbsSender sender, Message message) {
         Long chatId = message.getChatId();

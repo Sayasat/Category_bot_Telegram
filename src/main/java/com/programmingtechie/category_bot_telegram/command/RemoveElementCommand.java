@@ -15,7 +15,7 @@ public class RemoveElementCommand implements Command {
     public String execute(String text, Long chatId) {
         String[] commandParts = text.split(" ");
         if (commandParts.length == 2) {
-            // Удаляем элемент
+            // Удаляем элем
             String elementToRemove = commandParts[1];
             return categoryService.removeElement(elementToRemove, chatId);
         } else {

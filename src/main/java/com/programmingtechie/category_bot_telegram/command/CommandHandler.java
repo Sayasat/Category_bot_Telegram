@@ -27,7 +27,7 @@ public class CommandHandler {
 
     /**
      * Обрабатывает команду от пользователя. Это шаблонный метод, который выполняет проверку команды.
-     * Используется Command паттерн для делегирования выполнения соответствующим объектам команд.
+     * Используется Command паттерн для делегирования выполнения соответствующим объектам команд
      */
     public String handleCommand(AbsSender sender, String messageText, Message message, Long chatId) {
         if (messageText.startsWith("/start")) {

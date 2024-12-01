@@ -50,7 +50,7 @@ public class CategoryUploadService {
                 Category parentCategory = (parentCategoryName != null) ?
                         findOrCreateCategory(parentCategoryName, chatId) : null;
 
-                // Создание или получение категории
+                // Создание или получение категориии
                 Category category = categoryCache.computeIfAbsent(categoryName, name -> {
                     Category newCategory = new Category(name, parentCategory);
                     newCategory.setChatId(chatId);

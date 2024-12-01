@@ -18,7 +18,7 @@ public class CategoryRemoveService {
      *
      * @param elementName имя элемента.
      * @param chatId идентификатор чата.
-     * @return сообщение об удалении.
+     * @return сообщение об удалении
      */
     public String removeElement(String elementName, Long chatId) {
         Optional<Category> elementOpt = categoryRepository.findByNameAndChatId(elementName, chatId);

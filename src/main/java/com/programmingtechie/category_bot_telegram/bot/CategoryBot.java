@@ -49,7 +49,7 @@ public class CategoryBot extends TelegramLongPollingBot {
 
     /**
      * Основной метод для обработки обновлений, полученных от Telegram.
-     *Это паттерн Template Method, так как структура обработки сообщений задана абстрактным методом в классе TelegramLongPollingBot
+     * Это паттерн Template Method, так как структура обработки сообщений задана абстрактным методом в классе TelegramLongPollingBot
      * @param update обновление, полученное от Telegram
      */
     @Override

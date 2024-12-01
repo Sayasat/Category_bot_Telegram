@@ -69,7 +69,10 @@ public class CommandHandler {
         if (messageText.startsWith("/cancel")) {
             // Останавливает процесс загрузки файла
             uploadStateMap.remove(chatId);
-            return "Процесс загрузки файла был отменен.";
+            return """
+            Процесс загрузки файла был отменен.
+            При дополнительных вопросах нажмите на /help
+            """;
         }
         return "Неизвестная команда. Введите /help для получения списка команд.";
     }

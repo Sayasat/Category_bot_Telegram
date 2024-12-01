@@ -14,11 +14,11 @@ public class CategoryRemoveService {
     private final CategoryRepository categoryRepository;
 
     /**
-     * Удаляет элемент категории и все его дочерние элементы.
+     * Удаляет элемент и его дочерние элементы.
      *
-     * @param elementName имя элемента для удаления.
-     * @param chatId идентификатор чата, в котором находится элемент.
-     * @return сообщение об успешности удаления.
+     * @param elementName имя элемента.
+     * @param chatId идентификатор чата.
+     * @return сообщение об удалении.
      */
     public String removeElement(String elementName, Long chatId) {
         Optional<Category> elementOpt = categoryRepository.findByNameAndChatId(elementName, chatId);
@@ -29,14 +29,8 @@ public class CategoryRemoveService {
 
         Category element = elementOpt.get();
 
-        // Проверяем, есть ли у элемента дочерние категории
-//        if (!element.getChildren().isEmpty()) {
-//            // Уведомляем пользователя, что у элемента есть дочерние элементы
-//            return "Элемент \"" + elementName + "\" имеет дочерние категории, которые нужно удалить сначала.";
-//        }
-
-        // Удаляем элемент (категорию) и её дочерние элементы, если они есть
+        // Удаляем элемент и его дочерние элементы
         categoryRepository.delete(element);
-        return "Элемент \"" + elementName + "\" и его дочерние элементы успешно удалены.";
+        return "Элемент \"" + elementName + "\" и его дочерние элементы удалены.";
     }
 }

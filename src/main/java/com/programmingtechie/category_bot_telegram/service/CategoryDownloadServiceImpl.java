@@ -20,73 +20,68 @@ public class CategoryDownloadServiceImpl implements CategoryDownloadService {
     }
 
     /**
-     * Генерирует Excel-файл с деревом категорий для указанного chatId.
+     * Генерирует Excel-файл с деревом категорий для chatId.
      *
      * @param chatId идентификатор чата.
-     * @return массив байтов, представляющий Excel-файл с деревом категорий.
+     * @return байтовый массив Excel-файла.
      */
     @Override
     public byte[] generateCategoryTreeExcel(Long chatId) {
         List<Category> categories = categoryRepository.findByChatId(chatId);
 
-        // Если категорий для чата нет, выбрасываем исключение
         if (categories.isEmpty()) {
             throw new RuntimeException("Нет категорий для чата с chatId: " + chatId);
         }
 
         try (Workbook workbook = new XSSFWorkbook()) {
-            // Создаем новый лист Excel и заполняем его данными
             Sheet sheet = workbook.createSheet("Дерево категорий");
 
-            createHeader(sheet);  // Создаем заголовок таблицы
-            fillData(sheet, categories);  // Заполняем таблицу данными
+            createHeader(sheet);  // Заголовок таблицы
+            fillData(sheet, categories);  // Заполнение данными
 
-            // Записываем данные в ByteArrayOutputStream
             try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
                 workbook.write(out);
                 return out.toByteArray();  // Возвращаем байтовый массив
             }
         } catch (IOException e) {
-            throw new RuntimeException("Не удалось создать Excel файл", e);  // Обработка ошибок записи в файл
+            throw new RuntimeException("Не удалось создать Excel файл", e);
         }
     }
 
     /**
-     * Создает заголовок таблицы в Excel файле.
+     * Создает заголовок таблицы.
      *
-     * @param sheet лист Excel для добавления заголовка.
+     * @param sheet лист Excel для заголовка.
      */
     private void createHeader(Sheet sheet) {
-        Row headerRow = sheet.createRow(0);  // Создаем первую строку для заголовка
+        Row headerRow = sheet.createRow(0);
         CellStyle headerStyle = sheet.getWorkbook().createCellStyle();
         Font headerFont = sheet.getWorkbook().createFont();
-        headerFont.setBold(true);  // Делаем шрифт жирным
+        headerFont.setBold(true);
         headerStyle.setFont(headerFont);
 
-        // Заголовок для первого столбца
         Cell cell = headerRow.createCell(0);
         cell.setCellValue("Категория");
         cell.setCellStyle(headerStyle);
 
-        // Заголовок для второго столбца
         cell = headerRow.createCell(1);
         cell.setCellValue("Родительская категория");
         cell.setCellStyle(headerStyle);
     }
 
     /**
-     * Заполняет данные о категориях в Excel таблице.
+     * Заполняет таблицу данными о категориях.
      *
-     * @param sheet лист Excel для добавления данных.
-     * @param categories список категорий для добавления в таблицу.
+     * @param sheet лист Excel для данных.
+     * @param categories список категорий.
      */
     private void fillData(Sheet sheet, List<Category> categories) {
-        int rowIndex = 1;  // Начинаем с 1, так как 0-й индекс занят заголовком
+        int rowIndex = 1;
         for (Category category : categories) {
-            Row row = sheet.createRow(rowIndex++);  // Создаем новую строку для каждой категории
-            row.createCell(0).setCellValue(category.getName());  // Заполняем название категории
-            String parentName = category.getParent() != null ? category.getParent().getName() : " ";  // Получаем имя родительской категории
-            row.createCell(1).setCellValue(parentName);  // Заполняем имя родителя
+            Row row = sheet.createRow(rowIndex++);
+            row.createCell(0).setCellValue(category.getName());
+            String parentName = category.getParent() != null ? category.getParent().getName() : " ";
+            row.createCell(1).setCellValue(parentName);
         }
     }
 }

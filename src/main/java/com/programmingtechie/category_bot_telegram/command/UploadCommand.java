@@ -17,10 +17,6 @@ public class UploadCommand {
 
     /**
      * Обрабатывает загрузку файла с категориями и сохраняет данные в базу данных.
-     *
-     * @param inputStream входной поток данных файла, который был загружен пользователем
-     * @param chatId идентификатор чата пользователя
-     * @return сообщение об успешной обработке файла
      */
     public String handleFileUpload(InputStream inputStream, Long chatId) {
         try {

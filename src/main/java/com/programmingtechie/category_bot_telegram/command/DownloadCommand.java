@@ -17,44 +17,35 @@ public class DownloadCommand {
 
     private final CategoryService categoryService;
 
-    /**
-     * Конструктор класса, инжектящий зависимость для работы с категориями.
-     *
-     * @param categoryService сервис для работы с категориями
-     */
     public DownloadCommand(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
     /**
-     * Метод для обработки команды скачивания дерева категорий и отправки файла пользователю.
+     * Обрабатывает команду скачивания дерева категорий и отправляет файл.
      *
-     * @param sender объект для отправки сообщений в Telegram
-     * @param message сообщение от пользователя, содержащее запрос
+     * В этом методе используется паттерн Command для обработки команды
+     * и паттерн Factory для создания экземпляра InputFile с данными.
      */
     public void execute(AbsSender sender, Message message) {
         Long chatId = message.getChatId();
-        log.info("Получен запрос на скачивание от пользователя с chatId: {}", chatId);
+        log.info("Запрос на скачивание от chatId: {}", chatId);
 
         try {
-            // Получение байтового массива Excel файла с деревом категорий
+            // Используется паттерн Factory для создания объекта InputFile на основе байтового массива
             byte[] excelFile = categoryService.generateCategoryTreeExcel(chatId);
-
-            // Создание объекта InputFile для отправки в Telegram
             InputFile file = new InputFile(new ByteArrayInputStream(excelFile), "category_tree_" + chatId + ".xlsx");
 
-            // Создание объекта SendDocument для отправки файла
+            // Формирование сообщения с документом (Telegram API)
             SendDocument sendDocument = new SendDocument();
             sendDocument.setChatId(chatId.toString());
             sendDocument.setDocument(file);
-            sendDocument.setCaption("Дерево категорий для чата " + chatId);
+            sendDocument.setCaption("Дерево категорий готово");
 
-            // Отправка файла пользователю
             sender.execute(sendDocument);
-            log.info("Файл успешно отправлен пользователю с chatId: {}", chatId);
+            log.info("Файл отправлен пользователю с chatId: {}", chatId);
         } catch (TelegramApiException e) {
-            // Логирование ошибки при отправке файла
-            log.error("Ошибка при отправке Excel файла пользователю с chatId {}: {}", chatId, e.getMessage());
+            log.error("Ошибка при отправке файла для chatId {}: {}", chatId, e.getMessage());
         }
     }
 }

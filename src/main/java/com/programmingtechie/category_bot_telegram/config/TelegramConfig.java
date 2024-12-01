@@ -16,36 +16,32 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 @RequiredArgsConstructor
 public class TelegramConfig {
 
-    // Чтение значений из application.properties для имени бота и его токена
     @Value("${bot.name}")
     private String botName;
 
     @Value("${bot.token}")
     private String botToken;
 
-    // Ссылка на CommandHandler для обработки команд
     private final CommandHandler commandHandler;
 
     /**
      * Регистрация бота в Telegram API
-     * @return возвращает экземпляр CategoryBot
+     * @return CategoryBot
      */
     @Bean
     public CategoryBot categoryBot() {
-        // Создание экземпляра бота с использованием имени и токена
+        // Паттерн Factory Method: создание объекта без явного указания точного класса.
         CategoryBot categoryBot = new CategoryBot(botName, botToken, commandHandler);
 
         try {
-            // Создание объекта для работы с Telegram API
+            // Паттерн Singleton: TelegramBotsApi используется как синглтон для регистрации одного бота в Telegram API.
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-
-            // Регистрация бота
             botsApi.registerBot(categoryBot);
         } catch (TelegramApiException e) {
-            log.error("Error registering bot: {}", e.getMessage());
+            log.error("Ошибка регистрации бота: {}", e.getMessage());
         }
 
-        // Возвращаем экземпляр CategoryBot
+        // Возвращаем экземпляр CategoryBot, который зарегистрирован в Telegram API
         return categoryBot;
     }
 }

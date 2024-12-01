@@ -11,6 +11,15 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.InputStream;
 
+/**
+ * Team Members:
+ * - Sayasat Sabit, 230103164
+ * - Madiyar Abiken, 230103016
+ * - Amir Karimov, 230103345
+ *
+ *  Project: Category Tree
+ */
+
 @Slf4j
 public class CategoryBot extends TelegramLongPollingBot {
 
@@ -32,8 +41,6 @@ public class CategoryBot extends TelegramLongPollingBot {
 
     /**
      * Метод для получения имени бота.
-     *
-     * @return имя бота
      */
     @Override
     public String getBotUsername() {
@@ -42,7 +49,7 @@ public class CategoryBot extends TelegramLongPollingBot {
 
     /**
      * Основной метод для обработки обновлений, полученных от Telegram.
-     *
+     *Это паттерн Template Method, так как структура обработки сообщений задана абстрактным методом в классе TelegramLongPollingBot
      * @param update обновление, полученное от Telegram
      */
     @Override
@@ -63,9 +70,7 @@ public class CategoryBot extends TelegramLongPollingBot {
 
     /**
      * Метод для обработки текстовых сообщений и документов.
-     *
-     * @param chatId  идентификатор чата
-     * @param message сообщение из Telegram
+     * Этот метод использует паттерн Strategy для делегирования обработки сообщения в зависимости от его типа.
      */
     private void processMessage(Long chatId, Message message) {
         String responseMessage;
@@ -89,31 +94,21 @@ public class CategoryBot extends TelegramLongPollingBot {
 
     /**
      * Метод для обработки текстовых сообщений.
-     *
-     * @param message текстовое сообщение
-     * @param chatId  идентификатор чата
-     * @return ответное сообщение
      */
     private String handleTextMessage(Message message, Long chatId) {
         String messageText = message.getText().trim();
         log.info("Получено текстовое сообщение: {}", messageText);
 
-        // Делегируем обработку команды CommandHandler
         return commandHandler.handleCommand(this, messageText, message, chatId);
     }
 
     /**
      * Метод для обработки загруженных документов (файлов .xlsx).
-     *
-     * @param message сообщение с документом
-     * @param chatId  идентификатор чата
-     * @return ответное сообщение
      */
     private String handleDocumentMessage(Message message, Long chatId) {
         Document document = message.getDocument();
         log.info("Получен документ: {}", document.getFileName());
 
-        // Проверка формата файла
         if (!document.getFileName().endsWith(".xlsx")) {
             return "Неверный формат файла. Пожалуйста, загрузите файл с расширением .xlsx.";
         }
@@ -129,9 +124,7 @@ public class CategoryBot extends TelegramLongPollingBot {
 
     /**
      * Метод для получения файла из Telegram в виде InputStream.
-     *
-     * @param document документ из сообщения Telegram
-     * @return поток данных InputStream
+     * Используется паттерн Facade, который скрывает сложную логику работы с Telegram API за простым интерфейсом.
      */
     private InputStream getFileAsStream(Document document) {
         try {
@@ -154,9 +147,7 @@ public class CategoryBot extends TelegramLongPollingBot {
 
     /**
      * Метод для отправки текстового сообщения пользователю.
-     *
-     * @param chatId      идентификатор чата
-     * @param messageText текст сообщения
+     * Используется паттерн Command, так как этот метод делегирует выполнение задачи отправки сообщения через Telegram API.
      */
     private void sendMessage(Long chatId, String messageText) {
         SendMessage sendMessage = SendMessage.builder()

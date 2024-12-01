@@ -14,10 +14,6 @@ public class ViewTreeCommand implements Command {
     /**
      * Метод для обработки команды /viewTree, который отображает дерево категорий.
      * При необходимости может отображать подкатегории, если указано имя категории.
-     *
-     * @param text текст команды
-     * @param chatId идентификатор чата
-     * @return строка с результатом выполнения команды
      */
     @Override
     public String execute(String text, Long chatId) {
